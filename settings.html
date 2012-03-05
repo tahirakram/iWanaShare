@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"    type="text/javascript"></script>
+		<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"     type="text/javascript"></script>
+		
+		<script type="text/javascript" src="chrome_ex_oauthsimple.js"></script>
+		<script type="text/javascript" src="chrome_ex_oauth.js"></script>
+		
+		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"/>
+		<style>
+			body {
+				/*background-color: #f1f1f1; */
+				padding: 30px;
+			}
+			#myTab {
+				margin-top: -19px;
+			}
+
+		</style>
+		<script>
+		
+			
+		
+			jQuery(function() {
+				
+				var oauth = ChromeExOAuth.initBackgroundPage({
+					  'request_url': 'https://api.twitter.com/oauth/request_token',
+					  'authorize_url': 'https://api.twitter.com/oauth/authorize',
+					  'access_url': 'https://api.twitter.com/oauth/access_token',
+					  'consumer_key': 'SFVCU9mv2G9hlgLOBbUyA',
+					  'consumer_secret': 'to2rICnSm5fcFpRO92uhKbAjXWdSv855fW5BN9mwRzE',
+					  'scope': '',
+					  'app_name': 'Trim.pk'
+					});
+				
+				
+				
+				jQuery('#myTab').tab('show');
+				
+				jQuery('#connect').click(function (){
+					
+					 oauth.authorize(onAuthorized);
+				});
+			});
+			
+			function callback(resp, xhr) {
+		        alert('-----------');
+		      };
+		
+		      function onAuthorized() {
+		        /*var url = 'http://code.google.com/feeds/issues/p/chromium/issues/full';
+		        var request = {
+		          'method': 'GET',
+		          'parameters': {'alt': 'json'}
+		        };
+		        oauth.sendSignedRequest(url, callback, request);*/
+		       
+		       alert('-----------');
+		      };
+
+     
+			
+		</script>
+	</head>
+	<body>
+		<div class="page-header">
+			<h1>Settings <small>Configure extension here</small></h1>
+		</div>
+		<div class="tabbable tabs-left" id = "myTab">
+			<ul class="nav nav-tabs" >
+				<li class="active">
+					<a href="#1" data-toggle="tab">Connections</a>
+				</li>
+				<li>
+					<a href="#2" data-toggle="tab">About</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="1">
+					<p>
+						<a href= "#" id = "connect">Connect</a>.
+					</p>
+				</div>
+				<div class="tab-pane" id="2">
+					<p>
+						Howdy, I'm in Section 2.
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
