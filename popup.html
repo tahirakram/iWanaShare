@@ -47,29 +47,34 @@
 			window.addEventListener("load", windowLoaded, false);
 			function windowLoaded() {
 				chrome.tabs.getSelected(null, function(tab) {
+					localStorage["mysetting"] = "myvalue";
+					
 					if(tab.url != '') {
-						jQuery.ajax({
-							type : "get",
-							url : "http://engineplay.appspot.com/trim?url="+tab.url,
-							dataType : "json",
-							success : function(response) {
-								jQuery('#currentLink').val(tab.title + " " + response.url);
-								countChars('currentLink', 'charCount', 140);
-
-								jQuery('#loader').hide();
-								jQuery('#containder').show();
-
-							}
-						});
+						if (localStorage[tab.url]){
+							exposeTextArea(tab.title + " " + localStorage[tab.url]);
+						} else{
+							jQuery.ajax({
+								type : "get",
+								url : "http://engineplay.appspot.com/trim?url="+tab.url,
+								dataType : "json",
+								success : function(response) {
+									localStorage[tab.url] = response.url;
+									exposeTextArea(tab.title + " " + response.url);
+								}
+							});
+						}	
 					}
 				});
 			}
+			
+			function exposeTextArea(val){
+				jQuery('#currentLink').val(val);
+				countChars('currentLink', 'charCount', 140);
+				jQuery('#loader').hide();
+				jQuery('#containder').show();
+			}
 
 			jQuery(document).ready(function() {
-				
-				
-				
-				
 
 				jQuery("#copyToClipB").click(function() {
 					jQuery("#copyToClipB").addClass('disabled');
@@ -85,10 +90,8 @@
 				jQuery("#settings").click(function(){
 					chrome.tabs.create({url: "settings.html"}); 
 				});
-				
 			});
 
-			
 			function countChars(textbox, counter, max) {
 				var count = max - jQuery("#"+textbox).val().length;
 				if(count < 0) {
